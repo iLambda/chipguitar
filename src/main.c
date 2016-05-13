@@ -1,5 +1,6 @@
 #include "ps2simulator.h"
 #include "keycodes.h"
+#include "notemap.h"
 
 unsigned char state = 0;
 
@@ -7,10 +8,7 @@ unsigned char lasttrig = 0;
 unsigned char oldtrigbit = 0;
 unsigned char trigbit = 0;
 unsigned char notemode = 0x00;
-unsigned char notemap[16] = { 
-         NC1_C, NC1_D, NC1_E, NC1_F, NC1_G, NC1_A, NC1_B, NC2_C,
-         NC1_Cs, NC1_Ds, NC1_E, NC1_Fs, NC1_Gs, NC1_As, NC1_B, NC2_Cs
- };
+unsigned char* notemap = notemap_default;
 
 void keypress(unsigned char keycode) {
    ps2sim_send(keycode);
@@ -45,8 +43,11 @@ void keyup(unsigned char keycode) {
 void poll(void) {
      // gather input
      state = ~PORTB;
-     // notemode is lower three bits
-     notemode = (state & 0x70) >> 4;
+     // notemode is lower four bits :
+     //    notemode & 0x07 == note
+     //    notemode & 0x08 == is sharp
+     notemode = state & 0x0F;
+     
      // trigbit update
      oldtrigbit = trigbit;
      trigbit = state & 0x80;
