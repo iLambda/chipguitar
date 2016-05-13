@@ -69,15 +69,7 @@ void poll(void) {
      }
      
      // wait
-   delay_us(300);
-
-     // send
-     /*
-     keypress(0x0D);
-     keypress(0x15);
-     keypress(0x1D);
-     keypress(0x2E);
-     keypress(0x15);*/
+     delay_us(300);
 }
 
 // entry point
