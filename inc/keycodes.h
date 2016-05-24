@@ -33,4 +33,5 @@
 #define NC_INSTRDOWN    0x0C
 #define NC_TABLEUP      0x03
 #define NC_TABLEDOWN    0x0B
-#define NC_PULSE        0x0A
+#define NC_PULSETOGGLE  0x0A   // 0x43 ??
+#define NC_TABLERUN     0x29   // 0x39 ??
