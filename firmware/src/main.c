@@ -97,7 +97,7 @@ void poll(void) {
        // reset lasttrig
        lasttrig = 0;
      }
-     
+
      // gather input
      state = PORTC;
      // update select mode
@@ -110,7 +110,7 @@ void poll(void) {
      oldtablebit = tablebit;
      pulsebit = ~state & 0x02;
      tablebit = ~state & 0x03;
-         
+
      // check instr status
      if (!selectbit && oldselectbit) {
          // send select key
@@ -139,7 +139,7 @@ void poll(void) {
         // press table toggle
         keypress(NC_TABLERUN);
      }
-     
+
      // gather input
      state = PORTD;
      // update notemod incr bit
@@ -154,7 +154,7 @@ void poll(void) {
         delay_ms(750);
         led(LED_GREEN);
      }
-     
+
      // allow PS/2 programmation
      /*
      if (Ps2_Key_Read(&keydata, &special, &down)) {
@@ -185,12 +185,12 @@ void poll(void) {
 
            //set notemode
            notemode = (keydata - 1) % 3;
-           
+
            // blink
            led(LED_GREEN);
            delay_ms(1000);
            led(LED_OFF);
-           
+
            // start programming
            down = 0, keydata = 0;
            for (i = 0 ; i < 0x10 ; i++) {
@@ -206,7 +206,7 @@ void poll(void) {
                        }
                    }
                }
-               
+
                // save keycode
                j = (i >> 1) + (8 * (i & 1));
                notemaps[notemap][j] = keydata;
@@ -218,21 +218,21 @@ void poll(void) {
                delay_ms(200);
                led(LED_OFF);
            }
-           
+
            // blink
            led(LED_GREEN);
            delay_ms(550);
-           
+
            // escape
            escape:;
-           
+
            // end
            led(LED_RED);
            delay_ms(1000);
            led(LED_OFF);
         }
      } */
-     
+
      // wait
      delay_us(300);
 }
@@ -267,10 +267,10 @@ void main(void) {
      TRISC = 0xFF;
      TRISD = 0xF0;
      TRISE = 0;
-     
+
      // waiting for loading
      led(LED_RED);
-     
+
      // load modes from eeprom
      memload();
      // init PS/2 simulation
@@ -282,7 +282,7 @@ void main(void) {
      delay_ms(2000);
      // set green
      led(LED_GREEN);
-     
+
      // main loop
      while(1) { poll(); }
 }
